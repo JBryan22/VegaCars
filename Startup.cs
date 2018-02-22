@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Vega_New.Persistence;
 
 namespace Vega_New
 {
@@ -24,6 +26,12 @@ namespace Vega_New
         {
             //this is where we can register services for dependency injections such as
             //services.AddTransient<IRepository, EFRepository> -- this creates an instance of EF whenever the IRepository is in the constructor of a method (such as in a controller)
+
+            //we are adding our context file here so that we can inject it into our controllers. the advantage of doing this over doing something like... 
+            //VegaDbContext myContext = new VegaDbContext();
+            //is because it allows for loose coupling. By using DI we can inject the context into a controller, and it will automatically create an instance of this context
+            //we can also pass fake data for unit testing in the constructor which is the primary benefit
+            services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
 
             services.AddMvc();
         }
