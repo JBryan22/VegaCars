@@ -17,6 +17,7 @@ namespace Vega_New.Mapping
             //this works one way -- make --> makeresource. not the other way around
             CreateMap<Make, MakeResource>();
             CreateMap<Model, ModelResource>();
+            CreateMap<Feature, FeatureResource>();
         }
     }
 }

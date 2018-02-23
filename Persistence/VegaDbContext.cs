@@ -14,6 +14,7 @@ namespace Vega_New.Persistence
         //right now we don't need to create a dbset for models because models are part of make class. when we get makes, it returns a list of models associated with that make
         //we would need create a dbset for models only if we wanted to query them directly, which is not one of our use cases
         public DbSet<Make> Makes { get; set; }
+        public DbSet<Feature> Features { get; set; }
 
     }
 }

@@ -31,5 +31,13 @@ namespace Vega_New.Controllers
 
             return mapper.Map<List<Make>, List<MakeResource>>(makes);
         }
+
+        [HttpGet("/api/features")]
+        public async Task<IEnumerable<FeatureResource>> GetFeatures()
+        {
+            var features = await context.Features.ToListAsync();
+
+            return mapper.Map<List<Feature>, List<FeatureResource>>(features);
+        }
     }
 }

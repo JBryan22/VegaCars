@@ -11,9 +11,10 @@ using Vega_New.Persistence;
 namespace VegaNew.Migrations
 {
     [DbContext(typeof(VegaDbContext))]
-    partial class VegaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180223011220_SeedDatabaseFeatures")]
+    partial class SeedDatabaseFeatures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
