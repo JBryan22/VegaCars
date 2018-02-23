@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -24,6 +25,8 @@ namespace Vega_New
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper();
+
             //this is where we can register services for dependency injections such as
             //services.AddTransient<IRepository, EFRepository> -- this creates an instance of EF whenever the IRepository is in the constructor of a method (such as in a controller)
 
