@@ -1,16 +1,30 @@
+import { AppErrorHandler } from './components/app/app.error-handler';
 import { VehicleService } from './services/vehicle.service';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { ToastyModule } from 'ng2-toasty';
+import * as Raven from 'raven-js';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
-import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component'
+import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
+import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component'
+
+Raven
+  .config('https://c14f81b1742d473f9536a7bf76c1a645@sentry.io/304719')
+  .install();
+
+export class RavenErrorHandler implements ErrorHandler {
+    handleError(err:any) : void {
+        Raven.captureException(err);
+    }
+}
 
 @NgModule({
     declarations: [
@@ -19,16 +33,19 @@ import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.com
         CounterComponent,
         FetchDataComponent,
         HomeComponent,
-        VehicleFormComponent
+        VehicleFormComponent,
+        VehicleListComponent
     ],
     imports: [
         CommonModule,
         HttpModule,
         FormsModule,
+        ToastyModule.forRoot(),
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
+            { path: 'vehicles', component: VehicleListComponent },            
             { path: 'vehicles/new', component: VehicleFormComponent },
-            { path: 'home', component: HomeComponent },
+            { path: 'vehicles/:id', component: VehicleFormComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: '**', redirectTo: 'home' }
@@ -36,6 +53,7 @@ import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.com
     ],
     providers: [
         VehicleService,
+        { provide: ErrorHandler, useClass: AppErrorHandler}
     ]
 })
 export class AppModuleShared {

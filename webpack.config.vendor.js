@@ -13,6 +13,10 @@ const treeShakableModules = [
     '@angular/platform-browser-dynamic',
     '@angular/router',
     'zone.js',
+    'raven-js',
+    'underscore',
+    'ng2-toasty',
+    'ng2-toasty/bundles/style-bootstrap.css'
 ];
 const nonTreeShakableModules = [
     'bootstrap',
