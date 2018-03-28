@@ -17,6 +17,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import { ViewVehicleComponent } from './components/view-vehicle/view-vehicle.component'
+import { PhotoService } from './services/photo.service';
 
 Raven
   .config('https://c14f81b1742d473f9536a7bf76c1a645@sentry.io/304719')
@@ -58,6 +59,7 @@ export class RavenErrorHandler implements ErrorHandler {
     ],
     providers: [
         VehicleService,
+        PhotoService,
         { provide: ErrorHandler, useClass: AppErrorHandler}
     ]
 })
