@@ -5,9 +5,9 @@
 </button>
 
 <div class="well">
-    <div class="form-group well">
+    <div class="form-group">
       <label for="make">Make</label>
-      <select name="make" id="make" class="form-control" [(ngModel)]="filter.makeId" (change)="onFilterChange()">
+      <select name="make" id="make" class="form-control" [(ngModel)]="query.makeId" (change)="onFilterChange()">
         <option value=""></option>
         <option *ngFor="let m of makes" value="{{ m.id }}">{{ m.name }}</option>
       </select>
@@ -15,24 +15,35 @@
     <button class="btn btn-default" (click)="resetFilter()" type="button" >Reset</button>
 </div>
 
-
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Make</th>
-      <th scope="col">Model</th>
-      <th scope="col">Contact Email</th>
-      <th scope="col">Details</th>
+      <th *ngFor="let c of columns">
+        <div *ngIf="c.isSortable"
+            (click)="sortBy(c.key)" 
+            scope="col">
+            <i *ngIf="query.sortBy === c.key" 
+              class="fa" 
+              [class.fa-sort-asc]="query.isSortAscending" 
+              [class.fa-sort-desc]="!query.isSortAscending">
+            </i>
+          {{c.title}}
+        </div>
+        
+        <div *ngIf="!c.isSortable">
+          {{c.title}}
+        </div>
+      </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let vehicle of vehicles">
+    <tr *ngFor="let vehicle of queryResult.items">
       <th scope="col">{{ vehicle.id }}</th>
       <td>{{ vehicle.make.name }}</td>
       <td>{{ vehicle.model.name }}</td>
-      <td>{{ vehicle.contact.email }}</td>
+      <td>{{ vehicle.contact.name }}</td>
       <td><a [routerLink]="['/vehicles', vehicle.id]">View</a></td>
     </tr>
   </tbody>
 </table>
+<pagination [total-items]="queryResult.totalItems" [page-size]="query.pageSize" (page-changed)="onPageChange($event)"></pagination>

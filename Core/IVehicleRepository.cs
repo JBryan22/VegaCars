@@ -13,6 +13,6 @@ namespace Vega_New.Core
          void Add(Vehicle vehicle);
          void Remove(Vehicle vehicle);
          
-         Task<IEnumerable<Vehicle>> GetVehicles(Filter filter);
+         Task<QueryResult<Vehicle>> GetVehicles(VehicleQuery filter);
     }
 }

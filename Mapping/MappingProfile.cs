@@ -21,6 +21,9 @@ namespace Vega_New.Mapping
             //this works one way -- make --> makeresource. not the other way around
 
             //These 3 are Domain to API Resource
+            //queryresult is a generic type which is why we have to use typeof
+            CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
+            CreateMap<Photo, PhotoResource>();
             CreateMap<Make, MakeResource>();
             CreateMap<Make, KeyValuePairResource>();
             CreateMap<Model, KeyValuePairResource>();
@@ -35,7 +38,7 @@ namespace Vega_New.Mapping
                 .ForMember(vr => vr.Make, opt => opt.MapFrom(v => v.Model.Make));
 
             //API Resource to Domain
-            CreateMap<FilterResource, Filter>();
+            CreateMap<VehicleQueryResource, VehicleQuery>();
 
             CreateMap<SaveVehicleResource, Vehicle>()
                 .ForMember(v => v.ID, opt => opt.Ignore())

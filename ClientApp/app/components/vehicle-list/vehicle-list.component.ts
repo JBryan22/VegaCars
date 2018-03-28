@@ -8,9 +8,20 @@ import { Vehicle } from '../../models/vehicle';
   styleUrls: ['./vehicle-list.component.css']
 })
 export class VehicleListComponent implements OnInit {
+  private readonly PAGE_SIZE = 3;
+  queryResult: any = {};
   vehicles: Vehicle[];
   makes: any;
-  filter: any = {};
+  query: any = {
+    pageSize: this.PAGE_SIZE
+  };
+  columns = [
+    { title: 'ID' },
+    { title: 'Make', key: 'make', isSortable: true },
+    { title: 'Model', key: 'model', isSortable: true },
+    { title: 'Contact Name', key: 'contactName', isSortable: true },
+    { title: 'Details' },
+  ]
 
   constructor(private vehicleService: VehicleService) { }
 
@@ -22,13 +33,13 @@ export class VehicleListComponent implements OnInit {
   }
 
   private populateVehicles() {
-    this.vehicleService.getVehicles(this.filter).subscribe(data => {
-      this.vehicles = data;
+    this.vehicleService.getVehicles(this.query).subscribe(result => {
+      this.queryResult = result;
     });
   }
 
   onFilterChange() {
-
+    this.query.page = 1;
     this.populateVehicles();
 
     //This is a way to do filtering on the client side, which makes sense for small data sets. 
@@ -46,7 +57,25 @@ export class VehicleListComponent implements OnInit {
   }
   
   resetFilter() {
-    this.filter = {};
-    this.onFilterChange();
+    this.query = {
+      page: 1,
+      pageSize: this.PAGE_SIZE
+    };
+    this.populateVehicles();
+  }
+
+  sortBy(columnName: string) {
+    if (this.query.sortBy === columnName) {
+      this.query.isSortAscending = !this.query.isSortAscending;
+    } else {
+      this.query.sortBy = columnName;
+      this.query.isSortAscending = true;
+    }
+    this.populateVehicles();
+  }
+
+  onPageChange(page: number) {
+    this.query.page = page;
+    this.populateVehicles();
   }
 }

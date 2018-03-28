@@ -97,7 +97,6 @@ export class VehicleFormComponent implements OnInit {
     }
 
     submit() {
-        console.log("HELLO");
         if(this.vehicle.id) {
             this.vehicleService.update(this.vehicle)
                 .subscribe(x => {
@@ -110,9 +109,17 @@ export class VehicleFormComponent implements OnInit {
                     });
                 });
         } else {
-            console.log("else");
             this.vehicleService.create(this.vehicle)
-            .subscribe(x => console.log(x));
+            .subscribe(x => {
+                this.toastyService.success({
+                    title: 'Success',
+                    msg: 'The vehicle was successfully created',
+                    theme: 'bootstrap',
+                    showClose: true,
+                    timeout: 5000
+                });
+                this.router.navigateByUrl(`vehicles/${x.id}`)
+            });
         }
     }
 

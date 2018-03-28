@@ -12,6 +12,7 @@ const treeShakableModules = [
     '@angular/platform-browser',
     '@angular/platform-browser-dynamic',
     '@angular/router',
+    'font-awesome/css/font-awesome.css',
     'zone.js',
     'raven-js',
     'underscore',
