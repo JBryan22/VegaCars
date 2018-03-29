@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Vega_New.Core;
 using Vega_New.Core.Models;
 using Vega_New.Persistence;
+using VegaCars.Core;
+using VegaCars.Persistence;
 
 namespace Vega_New
 {
@@ -29,6 +31,7 @@ namespace Vega_New
         {
             services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
             services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper();
 
